@@ -13,7 +13,7 @@ const authedUserOwnsPost = async (req, res, next) => {
     const { postId } = req.params
     const post = await Post.fetchPostById(postId)
 
-    if (post.userEmail !== user.email) {
+    if (post.username !== user.username) {
       throw new ForbiddenError("User is not allowed to update other users' posts.")
     }
 
@@ -31,7 +31,7 @@ const authedUserIsNotPostOwner = async (req, res, next) => {
     const { postId } = req.params
     const post = await Post.fetchPostById(postId)
 
-    if (post.userEmail === user.email) {
+    if (post.username === user.username) {
       throw new BadRequestError("Users are not allowed to rate their own posts.")
     }
 

@@ -9,14 +9,10 @@ beforeEach(commonAfterEach)
 afterEach(commonBeforeEach)
 
 const newUser = {
-  username: "fake_user_two",
-  email: "fake_two@user.io",
+  username: "fake_user_three",
+  email: "fake_three@user.io",
   isAdmin: false,
 }
-
-afterAll(async () => {
-  await db.end()
-})
 
 describe("User", () => {
   describe("Test user registration", () => {

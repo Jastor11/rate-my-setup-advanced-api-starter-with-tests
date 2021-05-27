@@ -16,10 +16,10 @@ class Rating {
     const results = await db.query(
       `
         INSERT INTO ratings (rating, user_id, post_id)
-        VALUES ($1, (SELECT id FROM users WHERE email = $2), $3)
+        VALUES ($1, (SELECT id FROM users WHERE username = $2), $3)
         RETURNING rating, user_id, post_id, created_at;
       `,
-      [rating, user.email, postId]
+      [rating, user.username, postId]
     )
 
     return results.rows[0]
@@ -31,9 +31,9 @@ class Rating {
       `
         SELECT rating, user_id, post_id, created_at
         FROM ratings
-        WHERE user_id = (SELECT id FROM users WHERE email = $1) AND post_id = $2
+        WHERE user_id = (SELECT id FROM users WHERE username = $1) AND post_id = $2
       `,
-      [user.email, postId]
+      [user.username, postId]
     )
 
     return results.rows[0]

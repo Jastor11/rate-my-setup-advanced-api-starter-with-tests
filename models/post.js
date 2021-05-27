@@ -12,7 +12,7 @@ class Post {
              p.caption,
              p.image_url AS "imageUrl",
              p.user_id AS "userId",
-             u.email AS "userEmail",
+             u.username AS "username",
              AVG(r.rating) AS "rating",
              COUNT(r.rating) AS "totalRatings",
              p.created_at AS "createdAt",
@@ -20,7 +20,7 @@ class Post {
       FROM posts AS p
         LEFT JOIN users AS u ON u.id = p.user_id
         LEFT JOIN ratings AS r ON r.post_id = p.id
-      GROUP BY p.id, u.email
+      GROUP BY p.id, u.username
       ORDER BY p.created_at DESC
     `)
 
@@ -39,14 +39,14 @@ class Post {
              p.user_id AS "userId",
              AVG(r.rating) AS "rating",
              COUNT(r.rating) AS "totalRatings",
-             u.email AS "userEmail",             
+             u.username AS "username",             
              p.created_at AS "createdAt",
              p.updated_at AS "updatedAt"
       FROM posts AS p
         LEFT JOIN ratings AS r ON r.post_id = p.id
         LEFT JOIN users AS u ON u.id = p.user_id        
       WHERE p.id = $1
-      GROUP BY p.id, u.email
+      GROUP BY p.id, u.username
     `,
       [postId]
     )
@@ -76,16 +76,16 @@ class Post {
     const results = await db.query(
       `
       INSERT INTO posts (caption, image_url, user_id)
-      VALUES ($1, $2, (SELECT id FROM users WHERE email = $3))
+      VALUES ($1, $2, (SELECT id FROM users WHERE username = $3))
       RETURNING id, 
                 caption, 
                 image_url AS "imageUrl",
                 user_id AS "userId",
-                $3 AS "userEmail",
+                $3 AS "username",
                 created_at AS "createdAt",
                 updated_at AS "updatedAt"
     `,
-      [post.caption, post.imageUrl, user.email]
+      [post.caption, post.imageUrl, user.username]
     )
 
     return results.rows[0]
@@ -110,6 +110,7 @@ class Post {
                 caption, 
                 image_url AS "imageUrl",
                 user_id AS "userId",
+                $3 AS "username",
                 created_at AS "createdAt",
                 updated_at AS "updatedAt"
     `,
