@@ -1,14 +1,17 @@
-INSERT INTO users (email, password, is_admin)
+INSERT INTO users (email, username, password, is_admin)
 VALUES (
   'person@person.person',
+  'person',
   '$2b$13$f2qgPNcCZwsVwx1ITU4nRu8aqzOMmtfODihIGW8cWGEr5RrSIei2m',
   FALSE
 ), (
   'them@them.us',
+  'them',
   '$2b$13$B3qUJpO.Fp8fcjKtoYzfu.HHQ1RPzldER95pvYZW1bXw3DtMWH/gK',
   FALSE
 ), (
   'you@you.you',
+  'you',
   '$2b$13$T33tCBzH5rwUPk88UZ92sejWVOY7qHFYMDxnAiw6VdYc49j0Q2Oi2',
   FALSE
 );
