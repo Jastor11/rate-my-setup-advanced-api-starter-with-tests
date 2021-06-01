@@ -110,7 +110,6 @@ class Post {
                 caption, 
                 image_url AS "imageUrl",
                 user_id AS "userId",
-                $3 AS "username",
                 created_at AS "createdAt",
                 updated_at AS "updatedAt"
     `,
